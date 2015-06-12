@@ -74,7 +74,11 @@ let () =
   let ocamlfind = [
     "re.str"; "uri"; "tls"; "tls.mirage"; "mirage-http"; "magic-mime"
   ] in
-  let opam = ["re"; "uri"; "tls"; "mirage-http"; "magic-mime"] in
+  let opam =
+    match get_mode() with
+    | `Rumprun -> ["re-rumprun"; "uri-rumprun"; "tls-rumprun";
+                   "mirage-http-rumprun"; "magic-mime-rumprun"]
+    | _ -> ["re"; "uri"; "tls"; "mirage-http"; "magic-mime"] in
   add_to_ocamlfind_libraries ocamlfind;
   add_to_opam_packages opam;
   register "seal" [
